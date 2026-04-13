@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "Bunpro Sentence Mining",
+  "version": "1.0.0",
+  "description": "Select a Japanese word on any webpage and add it as a Bunpro self-study card with an auto-extracted sentence.",
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab",
+    "scripting",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://api.bunpro.jp/*",
+    "https://bunpro.jp/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "apommel@bunpro-sentence-mining",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["websiteContent"]
+      }
+    }
+  }
+}

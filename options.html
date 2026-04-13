@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bunpro Sentence Mining — Settings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      background: #f5f5f5;
+      color: #222;
+      padding: 32px 20px;
+    }
+
+    .page {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+
+    /* Sections */
+    .section {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .section h2 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #555;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Info box */
+    .info-box {
+      background: #eef4ff;
+      border: 1px solid #c5d8f8;
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      color: #2a4a80;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .info-box a { color: #2a5abf; }
+
+    /* Fields */
+    .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    label .note {
+      font-weight: 400;
+      color: #888;
+      font-size: 11.5px;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="url"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: monospace;
+      color: #222;
+      background: #fafafa;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus { border-color: #4a7fd4; background: #fff; }
+    input::placeholder { color: #bbb; }
+
+    .input-row { display: flex; gap: 6px; }
+    .input-row input { flex: 1; }
+
+    .toggle-btn {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      color: #555;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 0 10px;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .toggle-btn:hover { background: #e0e0e0; }
+
+    .hint {
+      font-size: 12px;
+      color: #777;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+    .hint a { color: #2a5abf; }
+
+    /* Checkbox row */
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .check-row input[type="checkbox"] {
+      width: 15px; height: 15px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #4a7fd4;
+    }
+    .check-row span { font-size: 13px; }
+
+    /* Test row */
+    .test-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .btn-test {
+      padding: 7px 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #f0f0f0;
+      color: #333;
+      font-size: 12.5px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-test:hover { background: #e4e4e4; }
+
+    .test-result { font-size: 12.5px; }
+    .test-result.ok  { color: #1e7e42; }
+    .test-result.err { color: #b42030; }
+
+    /* Save */
+    .save-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .btn-save {
+      padding: 9px 22px;
+      background: #4a7fd4;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-save:hover { background: #3a6bbf; }
+
+    .save-msg { font-size: 13px; color: #1e7e42; display: none; }
+    .save-msg.visible { display: inline; }
+
+    .footer {
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Bunpro Sentence Mining</h1>
+  <p class="subtitle">Settings</p>
+
+  <!-- Bunpro section -->
+  <div class="section">
+    <h2>Bunpro</h2>
+    <div class="info-box">
+      Your Bunpro token is read automatically from your browser cookies.
+      Make sure you are logged in at <a href="https://bunpro.jp" target="_blank">bunpro.jp</a>.
+    </div>
+    <div class="test-row">
+      <button class="btn-test" id="testBunpro">Test Bunpro connection</button>
+      <span class="test-result" id="bunproStatus"></span>
+    </div>
+  </div>
+
+  <!-- LLM section -->
+  <div class="section">
+    <h2>LLM — OpenAI-compatible</h2>
+
+    <div class="field">
+      <label for="llmBaseUrl">Base URL</label>
+      <input type="url" id="llmBaseUrl" placeholder="https://api.openai.com/v1" autocomplete="off" />
+      <p class="hint">Supports OpenAI, Ollama (<code>http://localhost:11434/v1</code>), LM Studio, etc.</p>
+    </div>
+
+    <div class="field">
+      <label for="llmApiKey">API Key</label>
+      <div class="input-row">
+        <input type="password" id="llmApiKey" placeholder="sk-…" autocomplete="off" />
+        <button class="toggle-btn" data-target="llmApiKey">Show</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="llmModel">Model <span class="note">e.g. gpt-4o-mini, etc.</span></label>
+      <input type="text" id="llmModel" placeholder="gpt-4o-mini" autocomplete="off" />
+    </div>
+
+    <div class="test-row">
+      <button class="btn-test" id="testLlm">Test LLM connection</button>
+      <span class="test-result" id="llmStatus"></span>
+    </div>
+  </div>
+
+  <!-- Behaviour section -->
+  <div class="section">
+    <h2>Behaviour</h2>
+    <div class="field">
+      <label class="check-row">
+        <input type="checkbox" id="openVocabTab" checked />
+        <span>Open Bunpro vocab page in a new tab after adding a word</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Save -->
+  <div class="save-row">
+    <button class="btn-save" id="saveBtn">Save settings</button>
+    <span class="save-msg" id="saveMsg">✓ Saved</span>
+  </div>
+
+  <p class="footer">Right-click any selected Japanese text → <em>Study in Bunpro</em></p>
+</div>
+<script src="options.js"></script>
+</body>
+</html>
