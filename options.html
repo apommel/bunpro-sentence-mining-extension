@@ -184,6 +184,94 @@
     .save-msg { font-size: 13px; color: #1e7e42; display: none; }
     .save-msg.visible { display: inline; }
 
+    /* Advanced / collapsible */
+    details { margin-bottom: 16px; }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #888;
+      user-select: none;
+      padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before {
+      content: "▶";
+      font-size: 9px;
+      transition: transform 0.15s;
+      display: inline-block;
+    }
+    details[open] summary::before { transform: rotate(90deg); }
+
+    .warn-box {
+      background: #fffbea;
+      border: 1px solid #e8d88a;
+      border-radius: 4px;
+      padding: 9px 12px;
+      font-size: 12px;
+      color: #6b5700;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: monospace;
+      color: #222;
+      background: #fafafa;
+      outline: none;
+      resize: vertical;
+      min-height: 260px;
+      line-height: 1.5;
+      transition: border-color 0.15s;
+    }
+    textarea:focus { border-color: #4a7fd4; background: #fff; }
+
+    .reset-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 5px;
+    }
+    .btn-reset {
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+      padding: 2px 0;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .btn-reset:hover { color: #444; }
+
+    .temp-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #4a7fd4;
+      cursor: pointer;
+    }
+    .temp-val {
+      font-size: 13px;
+      font-family: monospace;
+      color: #333;
+      min-width: 28px;
+      text-align: right;
+    }
+
     .footer {
       font-size: 12px;
       color: #999;
@@ -251,6 +339,33 @@
     </div>
   </div>
 
+  <!-- Advanced -->
+  <details id="advancedDetails">
+    <summary>Advanced</summary>
+    <div class="section" style="margin-top: 10px;">
+      <h2>LLM — Advanced</h2>
+
+      <div class="field">
+        <label for="llmTemperature">Temperature <span class="note">lower = more deterministic</span></label>
+        <div class="temp-row">
+          <input type="range" id="llmTemperature" min="0" max="2" step="0.05" value="0.2" />
+          <span class="temp-val" id="tempDisplay">0.20</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="llmSystemPrompt">System prompt</label>
+        <div class="warn-box">
+          ⚠ Changing the output schema will break the extension
+        </div>
+        <textarea id="llmSystemPrompt" spellcheck="false"></textarea>
+        <div class="reset-row">
+          <button class="btn-reset" id="resetPrompt">Reset to default</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
   <!-- Save -->
   <div class="save-row">
     <button class="btn-save" id="saveBtn">Save settings</button>
@@ -259,6 +374,6 @@
 
   <p class="footer">Right-click any selected Japanese text → <em>Study in Bunpro</em></p>
 </div>
-<script src="options.js"></script>
+<script type="module" src="options.js"></script>
 </body>
 </html>

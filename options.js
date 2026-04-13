@@ -1,6 +1,6 @@
 // options.js
 
-const BUNPRO_BASE = "https://api.bunpro.jp/api/frontend";
+import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from './constants.js';
 
 // ── Load saved settings ──────────────────────────────────────────────────────
 
@@ -8,15 +8,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const api = typeof browser !== "undefined" ? browser : chrome;
 
   api.storage.sync.get(
-    ["llmBaseUrl", "llmApiKey", "llmModel", "openVocabTab"],
+    ["llmBaseUrl", "llmApiKey", "llmModel", "openVocabTab", "llmSystemPrompt", "llmTemperature"],
     (data) => {
       if (data.llmBaseUrl)  document.getElementById("llmBaseUrl").value  = data.llmBaseUrl;
       if (data.llmApiKey)   document.getElementById("llmApiKey").value   = data.llmApiKey;
       if (data.llmModel)    document.getElementById("llmModel").value    = data.llmModel;
-      // Default openVocabTab to true if not set
       document.getElementById("openVocabTab").checked = data.openVocabTab !== false;
+
+      const temp = data.llmTemperature != null ? data.llmTemperature : DEFAULT_TEMPERATURE;
+      document.getElementById("llmTemperature").value = temp;
+      document.getElementById("tempDisplay").textContent = temp.toFixed(2);
+
+      document.getElementById("llmSystemPrompt").value = data.llmSystemPrompt ?? DEFAULT_SYSTEM_PROMPT;
     }
   );
+});
+
+// ── Temperature slider ────────────────────────────────────────────────────────
+
+document.getElementById("llmTemperature").addEventListener("input", (e) => {
+  document.getElementById("tempDisplay").textContent = parseFloat(e.target.value).toFixed(2);
+});
+
+// ── Reset system prompt ───────────────────────────────────────────────────────
+
+document.getElementById("resetPrompt").addEventListener("click", () => {
+  document.getElementById("llmSystemPrompt").value = DEFAULT_SYSTEM_PROMPT;
 });
 
 // ── Show/hide API key ────────────────────────────────────────────────────────
@@ -36,10 +53,12 @@ document.getElementById("saveBtn").addEventListener("click", () => {
   const api = typeof browser !== "undefined" ? browser : chrome;
 
   const data = {
-    llmBaseUrl:   document.getElementById("llmBaseUrl").value.trim(),
-    llmApiKey:    document.getElementById("llmApiKey").value.trim(),
-    llmModel:     document.getElementById("llmModel").value.trim(),
-    openVocabTab: document.getElementById("openVocabTab").checked,
+    llmBaseUrl:      document.getElementById("llmBaseUrl").value.trim(),
+    llmApiKey:       document.getElementById("llmApiKey").value.trim(),
+    llmModel:        document.getElementById("llmModel").value.trim(),
+    openVocabTab:    document.getElementById("openVocabTab").checked,
+    llmTemperature:  parseFloat(document.getElementById("llmTemperature").value),
+    llmSystemPrompt: document.getElementById("llmSystemPrompt").value,
   };
 
   api.storage.sync.set(data, () => {
