@@ -97,8 +97,8 @@ document.getElementById("testLlm").addEventListener("click", async () => {
   const apiKey   = document.getElementById("llmApiKey").value.trim();
   const model    = document.getElementById("llmModel").value.trim();
 
-  if (!baseUrl || !apiKey || !model) {
-    setStatus(statusEl, "err", "Fill in all LLM fields first");
+  if (!baseUrl || !model) {
+    setStatus(statusEl, "err", "Fill in Base URL and Model first");
     return;
   }
 
@@ -110,7 +110,7 @@ document.getElementById("testLlm").addEventListener("click", async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
       },
       body: JSON.stringify({
         model,

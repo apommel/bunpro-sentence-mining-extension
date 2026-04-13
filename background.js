@@ -102,7 +102,6 @@ async function getSettings() {
 function validateSettings(settings) {
   const missing = [];
   if (!settings.llmBaseUrl) missing.push("LLM Base URL");
-  if (!settings.llmApiKey)  missing.push("LLM API Key");
   if (!settings.llmModel)   missing.push("LLM Model");
   if (missing.length > 0) {
     throw new Error(`Missing settings: ${missing.join(", ")}. Please open the extension options.`);
@@ -194,7 +193,10 @@ async function llmProcessSentence(selectedWord, fullSentence, settings) {
   const baseUrl = settings.llmBaseUrl.replace(/\/$/, "");
   const res = await fetch(`${baseUrl}/chat/completions`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${settings.llmApiKey}` },
+    headers: {
+      "Content-Type": "application/json",
+      ...(settings.llmApiKey ? { Authorization: `Bearer ${settings.llmApiKey}` } : {}),
+    },
     body: JSON.stringify({
       model: settings.llmModel,
       messages: messages,
