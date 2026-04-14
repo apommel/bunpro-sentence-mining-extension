@@ -14,6 +14,25 @@ the required API endpoints and made the proof of concept Python script (under `r
 - **LLM formatting** — sends word + sentence to your OpenAI-compatible LLM to produce furigana, blank-fill, and English translation
 - **Opens vocab page** — after adding, opens `bunpro.jp/vocabs/<word>` in a background tab (configurable)
 
+## Installation
+
+First, **clone the repository** to your local machine.
+
+### Firefox
+
+1. Open a new tab and navigate to `about:debugging#/runtime/this-firefox`
+2. Click the **Load Temporary Add-on...** button.
+3. Select the `manifest.json` file from the repository.
+
+> **Note:** Firefox will remove the extension every time you restart the browser. You will need to repeat these steps to reload it.
+
+### Chromium-based Browsers (Chrome, Edge, Brave, etc.)
+
+1. Open a new tab and navigate to `chrome://extensions/`
+2. In the top-right corner, toggle **Developer mode** to **ON**.
+3. Click the **Load unpacked** button.
+4. Select the **root directory** of the repository (the folder containing the `manifest.json` file).
+
 ## Setup
 
 1. **Log in** at [bunpro.jp](https://bunpro.jp) — the extension reads the token automatically from cookies.
