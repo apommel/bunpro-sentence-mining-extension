@@ -71,3 +71,5 @@ fail to format the output correctly.
 Many thanks to this [Postman Bunpro API collection](https://www.postman.com/technical-meteorologist-63813544/bunpro-api/collection/a7eufz9/bunpro-frontend-api?sideView=agentMode)
 which was helpful to get started to understand the API structure even though some endpoints are now slightly
 outdated.
+
+Thanks also to Bunpro for creating this product, and for being open-minded about API usage.
